@@ -1,13 +1,14 @@
+#only allow access to bob and bob-public pods
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: access-arpspoof
+  name: access-internal
 spec:
   podSelector:
     matchLabels:
-      group: rkalyana
+      group: bob
   ingress:
   - from:
     - podSelector:
         matchExpressions:
-        - {key: group, operator: In, values: [rkalyana,rkalyana-public]}
+        - {key: group, operator: In, values: [bob,bob-public]}

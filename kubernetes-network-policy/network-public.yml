@@ -1,11 +1,12 @@
+#allow only external access to Jupyter (disallow access from any other pods)
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: access-arpspoof-public
+  name: access-jupyter
 spec:
   podSelector:
     matchLabels:
-      group: rkalyana-public
+      group: bob-public
   ingress:
   - ports:
     - port: 8888
