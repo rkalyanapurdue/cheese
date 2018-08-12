@@ -1,3 +1,0 @@
-[submodule "hacker-notebook/sslstrip"]
-	path = hacker-notebook/sslstrip
-	url = https://github.com/moxie0/sslstrip.git
