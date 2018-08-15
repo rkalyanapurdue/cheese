@@ -1,11 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: hacker
+  generateName: hacker-
   labels:
     group: rkalyana-public
     app: arpspoof-hacker
 spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - {key: app, operator: In, values: [arpspoof-victim,arpspoof-server]}
+          matchExpressions:
+          - {key: group, operator: In, values: [rkalyana,rkalyana-public]}
   containers:
   - name: hacker
     image: rkalyana/hacker-notebook

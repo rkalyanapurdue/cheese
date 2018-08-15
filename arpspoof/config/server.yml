@@ -1,11 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: server
+  generateName: server-
   labels:
     group: rkalyana
     app: arpspoof-server
 spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - {key: group, operator: In, values: [rkalyana,rkalyana-public]}
+          matchExpressions:
+          - {key: app, operator: In, values: [arpspoof-victim,arpspoof-hacker]}
   containers:
   - name: server
     image: timwang/ieeetrycybserverapacheflaskappsslnohstsnorewrite:1.0

@@ -1,11 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: victim
+  generateName: victim-
   labels:
     group: rkalyana-public
     app: arpspoof-victim
 spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - {key: group, operator: In, values: [rkalyana,rkalyana-public]}
+          matchExpressions:
+          - {key: app, operator: In, values: [arpspoof-hacker,arpspoof-server]}
   containers:
   - name: victim
     image: rkalyana/ubuntu-xfce-vnc
