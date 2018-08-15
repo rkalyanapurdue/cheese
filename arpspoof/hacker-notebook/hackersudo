@@ -1,0 +1,2 @@
+hacker ALL=(ALL) NOPASSWD:arpspoof
+hacker ALL=(ALL) NOPASSWD:iptables

@@ -4,10 +4,11 @@ metadata:
   name: victim
   labels:
     group: rkalyana-public
-    app: arpspoof
+    app: arpspoof-victim
 spec:
   containers:
   - name: victim
-    image: rkalyana/victim-notebook
+    image: rkalyana/ubuntu-xfce-vnc
     ports:
-    - containerPort: 8888
+    - containerPort: 6901
+    - containerPort: 5901

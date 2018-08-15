@@ -4,7 +4,7 @@ metadata:
   name: hacker
   labels:
     group: rkalyana-public
-    app: arpspoof
+    app: arpspoof-hacker
 spec:
   containers:
   - name: hacker

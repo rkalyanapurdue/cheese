@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: arpspoof-service
+  name: arpspoof-service-server
   labels:
     group: rkalyana-public
 spec:
@@ -13,8 +13,5 @@ spec:
   - name: https
     port: 443
     protocol: TCP
-  - name: jupyter
-    port: 8888
-    protocol: TCP
   selector:
-    app: arpspoof
+    app: arpspoof-server

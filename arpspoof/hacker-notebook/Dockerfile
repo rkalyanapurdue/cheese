@@ -20,6 +20,7 @@ RUN apt-get update && apt-get -yq dist-upgrade \
     sudo \
     locales \
     fonts-liberation \
+    dsniff \
     inetutils-ping \
     inetutils-traceroute \
     net-tools \
@@ -34,7 +35,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 # Configure environment
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
-    NB_USER=jovyan \
+    NB_USER=hacker \
     NB_UID=1000 \
     NB_GID=100 \
     LC_ALL=en_US.UTF-8 \
@@ -44,7 +45,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
     HOME=/home/$NB_USER
 
 ADD fix-permissions /usr/local/bin/fix-permissions
-# Create jovyan user with UID=1000 and in the 'users' group
+# Create hacker user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
 RUN groupadd wheel -g 11 && \
     echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
@@ -55,20 +56,26 @@ RUN groupadd wheel -g 11 && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
 
-#Allow Jupyter user to modify IP tables
-#Consider providing sudo access to just IP config utils
-RUN adduser $NB_USER sudo
+#copy SSLStrip to tmp
+COPY sslstrip /tmp
+
+WORKDIR /tmp
+
+#install SSLStrip
+RUN python setup.py install
+
+#Allow Jupyter user (hacker) to modify IP tables, run arpspoof 
+#as root without a password
+ADD hackersudo /etc/sudoers.d/
+#RUN echo 'hacker:hacker' | chpasswd
 
 USER $NB_UID
-
-#copy SSLStrip utils to NB_USER's home
-ADD --chown=1000:100 sslstrip /home/$NB_USER/
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
 
-# Install conda as jovyan and check the md5 sum provided on the download site
+# Install conda as hacker and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION 4.5.4
 RUN cd /tmp && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
@@ -127,5 +134,5 @@ COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
 
-# Switch back to jovyan to avoid accidental container runs as root
+# Switch back to hacker to avoid accidental container runs as root
 USER $NB_UID
