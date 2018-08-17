@@ -11,9 +11,14 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
           matchExpressions:
-          - {key: group, operator: In, values: [rkalyana,rkalyana-public]}
+          - {key: app, operator: In, values: [arpspoof-hacker]}
+        topologyKey: kubernetes.io/hostname
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
           matchExpressions:
-          - {key: app, operator: In, values: [arpspoof-hacker,arpspoof-server]}
+          - {key: app, operator: In, values: [arpspoof-victim]}
+        topologyKey: kubernetes.io/hostname
   containers:
   - name: victim
     image: rkalyana/ubuntu-xfce-vnc
