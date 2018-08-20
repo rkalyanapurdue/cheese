@@ -11,19 +11,14 @@ c.execute('''CREATE TABLE emailcloud
 users = [('Alice', 'pwd', 'alice@mail.com'),
 		 ('Alice', 'pwd', 'second@mail.com'),
 		 ('Alice', 'pwd', 'third@mail.com'),
-		 ('Barney', 'pwd', 'ledgen@mail.com'),
-		 ('Barney', 'pwd', 'waitforit@mail.com'),
-		 ('Barney', 'pwd', 'dary@mail.com'),
-		 ('Barney', 'pwd', 'awesome@mail.com'),
-		 ('Charles', 'pwd', 'kiss@mail.com'),
-		 ('Charles', 'pwd', 'donkey@mail.com'),
-		 ('Charles', 'pwd', 'blahblah@mail.com'),
-		 ('Donald', 'pwd', 'dumb@mail.com'),
-		 ('Donald', 'pwd', 'wall@mail.com'),
-		 ('Eric', 'pwd', 'eric@mail.com'),
+		 ('Bob', 'pwd', 'bob1@mail.com'),
+		 ('Bob', 'pwd', 'bob2@mail.com'),
+		 ('Charles', 'pwd', 'charlie@mail.com'),
+		 ('Donald', 'pwd', 'foo@mail.com'),
+		 ('Donald', 'pwd', 'bar@mail.com'),
+		 ('Apple', 'pwd', 'johnny@mail.com'),
 		 ('Eric', 'pwd', 'xing@mail.com'),
-		 ('Ericson', 'pwd', 'marsh@mail.com'),
-		 ('Ericson', 'pwd', 'mello@mail.com')
+		 ('Eric', 'pwd', 'mello@mail.com')
 		]
 
 c.executemany("INSERT INTO emailcloud VALUES (?, ?, ?)", users)

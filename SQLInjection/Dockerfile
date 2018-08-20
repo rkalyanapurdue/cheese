@@ -17,6 +17,8 @@ RUN mkdir $HOME/app && fix-permissions $HOME/app
 
 COPY --chown=1000:100 app $HOME/app/
 
+COPY --chown=1000:100 SQLInjection.ipynb $HOME/
+
 RUN conda install sqlite
 
 # makes running the following commands easier
